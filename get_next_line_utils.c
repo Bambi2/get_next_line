@@ -1,12 +1,12 @@
 #include "get_next_line.h"
 
-int	next_line_check(char *buf, int last_location, int max)
+int	next_line_check(char *buf, int start, int max)
 {
 	int	i;
 
 	if (!buf)
 		return (-1);
-	i = last_location;
+	i = start;
 	while (i < max)
 	{
 		if (buf[i] == '\n')
@@ -26,17 +26,18 @@ char *ft_realloc(char *line, char *buf, int max)
 	length = 0;
 	while(buf[length] != '\n' && length != max)
 		length++;
-	if (j != max)
+	if (length != max)
 		new_line = (char * ) malloc(length + ft_strlen(line) + 1);
 	else
 		new_line = (char * ) malloc(length + ft_strlen(line) + 2);
 	j = 0;
 	while (*line)
-		new_line[j++] = *line;
+		new_line[j++] = *(line++);
+	line -= j;
 	z = 0;
-	while(buf[j] != '\n' && j != max)
+	while(buf[j] != '\n' && z != max)
 		new_line[j++] = buf[z++];
-	if (j != max)
+	if (z != max)
 		new_line[j++] = '\n';
 	new_line[j] = '\0';
 	free(line);
@@ -47,6 +48,8 @@ int	ft_strlen(char *str)
 {
 	int	count;
 
+	if (!str)
+		return (0);
 	count = 0;
 	while (*str)
 	{
