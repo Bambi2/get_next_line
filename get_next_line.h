@@ -4,15 +4,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-# define BUFFER_SIZE 100
+# define BUFFER_SIZE 5
 
 char	*get_next_line(int fd);
 
 int	next_line_check(const char *line);
 char *ft_realloc(char *line, char *buf, int max);
 int	ft_strlen(const char *str);
-char	*make_line(char *user_line, char *buf, int start, int max);
+char	*make_line(const char *buf, int *i);
 char	*ft_strjoin(char const *s1, char const *s2);
+int	fd_read(int	fd, char *buf, int *i);
 
 struct	s_file {
 	int		fd;

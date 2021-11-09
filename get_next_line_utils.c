@@ -16,34 +16,6 @@ int	next_line_check(const char *line)
 	return (0);
 }
 
-char *ft_realloc(char *line, char *buf, int max)
-{
-	int		length;
-	char	*new_line;
-	int		j;
-	int		z;
-
-	length = 0;
-	while(buf[length] != '\n' && length != max)
-		length++;
-	if (length != max)
-		new_line = (char * ) malloc(length + ft_strlen(line) + 1);
-	else
-		new_line = (char * ) malloc(length + ft_strlen(line) + 2);
-	j = 0;
-	while (*line)
-		new_line[j++] = *(line++);
-	line -= j;
-	z = 0;
-	while(buf[j] != '\n' && z != max)
-		new_line[j++] = buf[z++];
-	if (z != max)
-		new_line[j++] = '\n';
-	new_line[j] = '\0';
-	free(line);
-	return (new_line);
-}
-
 int	ft_strlen(const char *str)
 {
 	int	length;
@@ -54,34 +26,6 @@ int	ft_strlen(const char *str)
 	while (str[length])
 		length++;
 	return (length);
-}
-
-char	*make_line(char *user_line, char *buf, int start, int max)
-{
-	char	*line;
-	int		j;
-	int		length;
-
-	if (user_line != NULL)
-		return (ft_realloc(user_line, buf, max));
-	length = 0;
-	j = start;
-	while(buf[j] != '\n' && j != max)
-	{
-		length++;
-		j++;
-	}
-	if (j != max)
-		line = (char *) malloc(length + 2);
-	else
-		line = (char *) malloc(length + 1);
-	j = 0;
-	while (buf[start] != '\n' && start != max)
-		line[j++] = buf[start++];
-	if (start != max)
-		line[j++] = '\n';
-	line[j] = '\0';
-	return (line);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -102,4 +46,44 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		result[j++] = s2[i++];
 	result[j] = '\0';
 	return (result);
+}
+
+char	*make_line(const char *buf, int *i)
+{
+	char	*line;
+	int		size;
+
+	size = 0;
+	while (buf[*i + size] != '\0' && buf[*i + size] != '\n')
+		size++;
+	if (buf[*i + size] == '\n')
+		size++;
+	line = (char *) malloc(size + 1);
+	if (!line)
+		return (NULL);
+	size = 0;
+	while (buf[*i] != '\0' && buf[*i] != '\n')
+	{
+		line[size++] = buf[*i];
+		(*i)++;
+	}
+	if (buf[*i] == '\n')
+	{
+		line[size++] = '\n';
+		(*i)++;
+	}
+	line[size] = '\0';
+	return (line);
+}
+
+int	fd_read(int	fd, char *buf, int *i)
+{
+	int	size;
+
+	size = read(fd, buf, BUFFER_SIZE);
+	if (size <= 0)
+		return (0);
+	buf[size] = '\0';
+	*i = 0;
+	return (size);
 }
