@@ -32,6 +32,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*temp_line;
 
+	if (buf[i] == '\n')
+		i++;
 	if (buf[i] == '\0')
 	{
 		size = read(fd, buf, BUFFER_SIZE);
@@ -43,18 +45,22 @@ char	*get_next_line(int fd)
 	size = 0;
 	while (buf[i + size] != '\0' && buf[i + size] != '\n')
 		size++;
-	i += size;
+	if (buf[i + size] == '\n')
+		size++;
 	line = (char *) malloc(size + 1);
 	if (!line)
 		return (NULL);
 	size = 0;
-	while (buf[i + size] != '\0' && buf[i + size] != '\n')
+	while (buf[i] != '\0' && buf[i] != '\n')
 	{
-		line[size] = buf[i + size];
+		line[size] = buf[i];
+		i++;
 		size++;
 	}
+	if (buf[i] == '\n')
+		line[size++] = '\n';
 	line[size] = '\0';
-	while (line[size] != '\n' && size != 0)
+	while (!next_line_check(line))
 	{
 		size = read(fd, buf, BUFFER_SIZE);
 		if (size <= 0)
@@ -64,17 +70,22 @@ char	*get_next_line(int fd)
 		size = 0;
 		while (buf[i + size] != '\0' && buf[i + size] != '\n')
 			size++;
-		i += size;
+		if (buf[i + size] == '\n')
+			size++;
 		temp_line = (char *) malloc(size + 1);
 		if (!temp_line)
 			return (NULL);
-		line = ft_strjoin(line, temp_line);
 		size = 0;
-		while (buf[i + size] != '\0' && buf[i + size] != '\n')
+		while (buf[i] != '\0' && buf[i] != '\n')
 		{
-			line[size] = buf[i + size];
+			temp_line[size] = buf[i];
+			i++;
 			size++;
 		}
+		if (buf[i] == '\n')
+			temp_line[size++] = '\n';
+		temp_line[size] = '\0';
+		line = ft_strjoin(line, temp_line);
 	}
 	return (line);
 }

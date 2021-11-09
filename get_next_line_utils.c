@@ -1,19 +1,19 @@
 #include "get_next_line.h"
 
-int	next_line_check(char *buf, int start, int max)
+int	next_line_check(const char *line)
 {
 	int	i;
 
-	if (!buf)
-		return (-1);
-	i = start;
-	while (i < max)
+	if (!line)
+		return (0);
+	i = 0;
+	while (line[i])
 	{
-		if (buf[i] == '\n')
-			return (i);
+		if (line[i] == '\n')
+			return (1);
 		i++;
 	}
-	return (-1);
+	return (0);
 }
 
 char *ft_realloc(char *line, char *buf, int max)
@@ -44,19 +44,16 @@ char *ft_realloc(char *line, char *buf, int max)
 	return (new_line);
 }
 
-int	ft_strlen(char *str)
+int	ft_strlen(const char *str)
 {
-	int	count;
+	int	length;
 
 	if (!str)
 		return (0);
-	count = 0;
-	while (*str)
-	{
-		count++;
-		str++;
-	}
-	return (count);
+	length = 0;
+	while (str[length])
+		length++;
+	return (length);
 }
 
 char	*make_line(char *user_line, char *buf, int start, int max)
