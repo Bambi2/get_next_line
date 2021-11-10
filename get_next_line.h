@@ -12,10 +12,9 @@ char	*make_line(const char *buf, int *i);
 char	*ft_strjoin(char *s1, char *s2);
 int		fd_read(int	fd, char *buf, int *i);
 
-// typedef struct s_file {
-// 	int		fd;
-// 	int		i;
-// 	char	buf[BUFFER_SIZE];
-// }	t_file;
+typedef struct s_file {
+	int		i;
+	char	buf[BUFFER_SIZE];
+}	t_file;
 
 #endif

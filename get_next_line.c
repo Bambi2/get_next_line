@@ -1,8 +1,4 @@
 #include "get_next_line.h"
-#include <sys/types.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <stdio.h>
 
 char	*get_next_line(int fd)
 {
@@ -30,21 +26,4 @@ char	*get_next_line(int fd)
 		line = ft_strjoin(line, temp_line);
 	}
 	return (line);
-}
-
-int	main()
-{
-	int fd;
-	char *text;
-
-	// fd = open("text", O_RDONLY);
-	fd = 0;
-	text = get_next_line(fd);
-	while(text)
-	{
-		printf("%s", text);
-		free(text);
-		text = get_next_line(fd);
-	}
-	free(text);
 }
