@@ -28,7 +28,7 @@ int	ft_strlen(const char *str)
 	return (length);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;
 	int		i;
@@ -45,6 +45,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[i])
 		result[j++] = s2[i++];
 	result[j] = '\0';
+	free(s1);
+	free(s2);
 	return (result);
 }
 

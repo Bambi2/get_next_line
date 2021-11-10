@@ -6,7 +6,7 @@
 
 char	*get_next_line(int fd)
 {
-	static char		buf[BUFFER_SIZE + 1];
+	static char		buf[BUFFER_SIZE * (-1 + (BUFFER_SIZE >= 0) * 2) + 1];
 	static int		i;
 	char			*line;
 	char			*temp_line;
@@ -46,6 +46,5 @@ int	main()
 		free(text);
 		text = get_next_line(fd);
 	}
-	
 	free(text);
 }
