@@ -32,20 +32,20 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main()
-{
-	int fd;
-	char *text;
+// int	main()
+// {
+// 	int fd;
+// 	char *text;
 
-	// fd = open("text", O_RDONLY);
-	fd = 0;
-	text = get_next_line(fd);
-	while(text)
-	{
-		printf("%s", text);
-		free(text);
-		text = get_next_line(fd);
-	}
+// 	// fd = open("text", O_RDONLY);
+// 	fd = 0;
+// 	text = get_next_line(fd);
+// 	while(text)
+// 	{
+// 		printf("%s", text);
+// 		free(text);
+// 		text = get_next_line(fd);
+// 	}
 	
-	free(text);
-}
+// 	free(text);
+// }
